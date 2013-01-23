@@ -47,16 +47,14 @@ def MatrixPerturb(Array_Name,Probability):
     #element_size determines the number of columns in each row by dividing the total number of items in the array/number of rows
     prob_vector = MatrixCreate(array_size,element_size)
     prob_vector = copy.deepcopy(Array_Name)
+    #copying all of the elements from the matrix passed in to a new matrix, prob_vector
 
     xx = random.random()
-    yy = size(p)
-    xy = 0
+    row = 0
 
-    while xy<yy:
+    while(row<array_size):
         if(xx<Probability):
-            p[xy] = random.random()
-            
+            prob_vector[row,0] = random.random()
         xx = random.random()
-        xy += 1
-        
-    return p
+        row += 1
+    return prob_vector
