@@ -18,9 +18,11 @@ def MatrixRandomize(ArrayName):
 def MatrixRandomize(Array_Name):
     random.seed()
     array_size = len(Array_Name)
-    element_size = size(Array_Name)
-    for row in range(array_size):
-        for element in range(element_size):
-            Array_Name[row][element] = random.random()
-
+    element_size = (size(Array_Name))/array_size
+    #element size determines the number of columns in each row by dividing the total number of items in the array/number of rows
+    row = 0
+    while(row<array_size):
+        for column in range(element_size):
+            Array_Name[row,column] = random.random()
+        row = row+1
     return Array_Name
