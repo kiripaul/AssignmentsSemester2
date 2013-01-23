@@ -58,11 +58,10 @@ def MatrixPerturb(Array_Name,Probability):
     prob_vector = copy.deepcopy(Array_Name)
     #copying all of the elements from the matrix passed in to a new matrix, prob_vector
 
-    xx = random.random()
     row = 0
 
     while(row<array_size):
-        if(xx<Probability):
+        if(random.random()<Probability):
             prob_vector[row,0] = random.random()
             #Assuuming that the array from the fitness function is passed in,
             #each row of the array will only have one element thus the indexing at 0
@@ -70,6 +69,26 @@ def MatrixPerturb(Array_Name,Probability):
         #re-generate the random number
         row += 1
     return prob_vector
+
+def SerialHillClimber(Rows, Columns, Generations,Probability):
+    Parent_Array = MatrixCreate(Rows,Columns)
+    #print "ZEROS"
+    #print Parent_Array
+    MatrixRandomize(Parent_Array)
+    #print "RANDOMIZED"
+    #print Parent_Array
+    Parent_Fitness = Fitness(Parent_Array)
+    #print "PARENT FITNESS"
+    #print Parent_Fitness
+    for current_gen in range(Generations):
+        print current_gen,Parent_Fitness[0][0]
+        Child = MatrixPerturb(Parent_Array,Probability)
+        Child_Fitness = Fitness(Child)
+        if(Child_Fitness > Parent_Fitness):
+            Parent_Array = Child
+            Parent_Fitness = Child_Fitness
+        
+    
 
 def testRun():
     arr = MatrixCreate(10,1)
@@ -80,7 +99,7 @@ def testRun():
     jj = Fitness(arr)
     print "FITNESS"
     print jj
-    ii = MatrixPerturb(jj,0.5)
+    ii = MatrixPerturb(jj,0.99)
     print "MATRIXPERTURB"
     print ii
     
