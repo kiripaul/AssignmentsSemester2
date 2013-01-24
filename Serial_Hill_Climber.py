@@ -2,7 +2,7 @@ import numpy
 from scipy import *
 import matplotlib.pyplot as plt
 import random
-import copy
+from copy import deepcopy
 
 
 def MatrixCreate(Rows,Columns):
@@ -16,59 +16,58 @@ def MatrixRandomize(Array_Name):
     #Input: Array
     #Output: New Array
     random.seed()
-    array_size = len(Array_Name)
+    array_rows = len(Array_Name)
     #len() gives the number of rows
-    element_size = (size(Array_Name))/array_size
-    #element_size determines the number of columns in each row by dividing the total number of items in the array/number of rows
-    row = 0
-    while(row<array_size):
+    array_columns = (size(Array_Name))/array_rows
+    #element_size determines the number of columns in each row
+    for row in range(array_rows):
         #looping through Rows
-        for column in range(element_size):
+        for column in range(array_columns):
             #looping through each column(element) in the row
             Array_Name[row,column] = random.random()
-        row = row+1
     return Array_Name
 
 def Fitness(Array_Name):
     #Input: Array
     #Output: N-by-1 Dimensional Array
-    array_size = len(Array_Name)
+    array_row = len(Array_Name)
     #len() gives the number of rows
-    element_size = (size(Array_Name))/array_size
+    element_size = (size(Array_Name))/array_row
     #element_size determines the number of columns in each row
-    row = 0
-    vector_means = MatrixCreate(array_size,1)
+    vector_means = MatrixCreate(array_row,1)
     #vector_means will hold the means of each row
-    while(row<array_size):
+    for row in range(array_row):
         for column in range(element_size):
             current_sum = sum(Array_Name[row,:])
             vector_mean = current_sum/element_size
             vector_means[row,0] = vector_mean
-        row = row+1
     return vector_means
 
 def MatrixPerturb(Array_Name,Probability):
     #Input: Array, Float
     #Output: Array
+    
     array_rows = len(Array_Name)
     #len() gives the number of rows
     array_columns = (size(Array_Name))/array_rows
     #element_size determines the number of columns in each row
-    prob_vector = MatrixCreate(array_rows,array_columns)
+    
+    #prob_vector = MatrixCreate(array_rows,array_columns)
     #allocating space for new vector
-    prob_vector[:,:] = Array_Name[:,:]
+    #prob_vector[:,:] = Array_Name[:,:]
+    prob_vector = deepcopy(Array_Name)
     #copying all of the elements from the matrix passed in to a new matrix
-    row = 0
+
     random.seed()
     xx = random.random()
-    while(row<array_rows):
+    for row in range(array_rows):
         if(xx<Probability):
             prob_vector[row,(range(array_columns))] = random.random()
             #Assuuming that the array from the fitness function is passed in,
             #each row of the array will only have one element thus the indexing at 0
         xx = random.random()
+        #print "RANDOM",row,xx
         #re-generate the random number
-        row += 1
     return prob_vector
 
 def SerialHillClimber(Rows,Columns,Generations):
@@ -77,22 +76,26 @@ def SerialHillClimber(Rows,Columns,Generations):
     Parent_Array = MatrixRandomize(Parent_Array)
     #:::
     Parent_Fitness = Fitness(Parent_Array)
-    #Child_Fitness = MatrixCreate(Rows,1)
+    Fits = MatrixCreate(Generations,1)
     #:::
     for cur_gen in range(Generations):
         print cur_gen, Parent_Fitness[0][0]
         Child_Array = MatrixPerturb(Parent_Array,0.05)
         Child_Fitness = Fitness(Child_Array)
-        if(Child_Fitness > Parent_Fitness):
-            Parent_Array = Child_Array
-            Parent_Fitness = Child_Fitness
-                
-    
-    
-    
+        for row in range(Rows):
+            for column in range(Columns):
+                if(Child_Fitness > Parent_Fitness):
+                    Parent_Array[row,column] = Child_Array[row,column]
+                    Parent_Fitness[row,0] = Child_Fitness[row,0]
+            Fits[cur_gen] = Parent_Fitness
+        
+    return Fits
     
         
-    
+def PlotVectorAsLine(Array_Name):
+    plotted_results = plt.plot(Array_Name)
+    #plt.show()
+    return plotted_results
 
 def testRun():
     arr = MatrixCreate(10,1)
