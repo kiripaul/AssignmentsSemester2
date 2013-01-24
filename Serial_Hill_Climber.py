@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import random
 import copy
 
+
 def MatrixCreate(Rows,Columns):
     #Inputs: int,int
     #Output: Array of zeroes
@@ -14,7 +15,6 @@ def MatrixCreate(Rows,Columns):
 def MatrixRandomize(Array_Name):
     #Input: Array
     #Output: New Array
-    
     random.seed()
     array_size = len(Array_Name)
     #len() gives the number of rows
@@ -30,39 +30,40 @@ def MatrixRandomize(Array_Name):
     return Array_Name
 
 def Fitness(Array_Name):
+    #Input: Array
+    #Output: N-by-1 Dimensional Array
     array_size = len(Array_Name)
     #len() gives the number of rows
     element_size = (size(Array_Name))/array_size
-    #element_size determines the number of columns in each row by dividing the total number of items in the array/number of rows
+    #element_size determines the number of columns in each row
     row = 0
     vector_means = MatrixCreate(array_size,1)
-    #vector_means will hold the means of each row: it is set up so that it can work with multidimensional matrices
-    num_elem = 0
+    #vector_means will hold the means of each row
     while(row<array_size):
         for column in range(element_size):
             current_sum = sum(Array_Name[row,:])
-            num_elem = num_elem + 1
-        vector_mean = current_sum/num_elem
-        vector_means[row,0] = vector_mean
+            vector_mean = current_sum/element_size
+            vector_means[row,0] = vector_mean
         row = row+1
     return vector_means
 
 def MatrixPerturb(Array_Name,Probability):
-    random.seed()
-    array_size = len(Array_Name)
+    #Input: Array, Float
+    #Output: Array
+    array_rows = len(Array_Name)
     #len() gives the number of rows
-    element_size = (size(Array_Name))/array_size
-    #element_size determines the number of columns in each row by dividing the total number of items in the array by the number of rows
-    prob_vector = MatrixCreate(array_size,element_size)
+    array_columns = (size(Array_Name))/array_rows
+    #element_size determines the number of columns in each row
+    prob_vector = MatrixCreate(array_rows,array_columns)
     #allocating space for new vector
-    prob_vector = copy.deepcopy(Array_Name)
-    #copying all of the elements from the matrix passed in to a new matrix, prob_vector
-
+    prob_vector[:,:] = Array_Name[:,:]
+    #copying all of the elements from the matrix passed in to a new matrix
     row = 0
-
-    while(row<array_size):
-        if(random.random()<Probability):
-            prob_vector[row,0] = random.random()
+    random.seed()
+    xx = random.random()
+    while(row<array_rows):
+        if(xx<Probability):
+            prob_vector[row,(range(array_columns))] = random.random()
             #Assuuming that the array from the fitness function is passed in,
             #each row of the array will only have one element thus the indexing at 0
         xx = random.random()
@@ -70,23 +71,26 @@ def MatrixPerturb(Array_Name,Probability):
         row += 1
     return prob_vector
 
-def SerialHillClimber(Rows, Columns, Generations,Probability):
+def SerialHillClimber(Rows,Columns,Generations):
     Parent_Array = MatrixCreate(Rows,Columns)
-    #print "ZEROS"
-    #print Parent_Array
-    MatrixRandomize(Parent_Array)
-    #print "RANDOMIZED"
-    #print Parent_Array
+    #:::
+    Parent_Array = MatrixRandomize(Parent_Array)
+    #:::
     Parent_Fitness = Fitness(Parent_Array)
-    #print "PARENT FITNESS"
-    #print Parent_Fitness
-    for current_gen in range(Generations):
-        print current_gen,Parent_Fitness[0][0]
-        Child = MatrixPerturb(Parent_Array,Probability)
-        Child_Fitness = Fitness(Child)
+    #Child_Fitness = MatrixCreate(Rows,1)
+    #:::
+    for cur_gen in range(Generations):
+        print cur_gen, Parent_Fitness[0][0]
+        Child_Array = MatrixPerturb(Parent_Array,0.05)
+        Child_Fitness = Fitness(Child_Array)
         if(Child_Fitness > Parent_Fitness):
-            Parent_Array = Child
+            Parent_Array = Child_Array
             Parent_Fitness = Child_Fitness
+                
+    
+    
+    
+    
         
     
 
@@ -102,5 +106,19 @@ def testRun():
     ii = MatrixPerturb(jj,0.99)
     print "MATRIXPERTURB"
     print ii
+    '''
+    Parent_Array = MatrixCreate(10,1)
+    Child = MatrixCreate(10,1)
+    MatrixRandomize(Parent_Array)
+    Parent_Fitness = Fitness(Parent_Array)
+    for current_gen in range(8):
+        print current_gen,Parent_Fitness[0][0]
+        Child = MatrixPerturb(Parent_Array,0.05)
+        Child_Fitness = Fitness(Child)
+        if(Child_Fitness > Parent_Fitness):
+            Parent_Array = Child
+            Parent_Fitness = Child_Fitness
+    '''
+    
     
     
