@@ -94,8 +94,18 @@ def SerialHillClimber(Rows,Columns,Generations):
         
 def PlotVectorAsLine(Array_Name):
     plotted_results = plt.plot(Array_Name)
-    plt.show()
     return plotted_results
+
+def PlotHC(Rows,Columns,Generations,Lineages):
+    for yy in range(0,Lineages):
+        graph_me = SerialHillClimber(Rows,Columns,Generations)
+        ii = PlotVectorAsLine(graph_me)   
+    plt.show(ii)
+
+
+
+
+
 
 def testRun():
     arr = MatrixCreate(2,10)
