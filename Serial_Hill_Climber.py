@@ -32,15 +32,14 @@ def Fitness(Array_Name):
     #Output: N-by-1 Dimensional Array
     array_row = len(Array_Name)
     #len() gives the number of rows
-    element_size = (size(Array_Name))/array_row
+    array_column = (size(Array_Name))/array_row
     #element_size determines the number of columns in each row
-    vector_means = MatrixCreate(1,element_size)
+    vector_means = MatrixCreate(array_row,1)
     #vector_means will hold the means of each row
     for row in range(array_row):
-        for column in range(element_size):
-            current_sum = sum(Array_Name[row,:])
-            vector_mean = current_sum/element_size
-            vector_means[0,column] = vector_mean
+        current_sum = sum(Array_Name[row,:])
+        vector_mean = current_sum/array_column
+        vector_means[row,0] = vector_mean            
     return vector_means
 
 def MatrixPerturb(Array_Name,Probability):
@@ -60,7 +59,7 @@ def MatrixPerturb(Array_Name,Probability):
     for row in range(array_rows):
         for column in range(array_columns):
             if(xx<Probability):
-                prob_vector[row,columns] = random.random()
+                prob_vector[row,column] = random.random()
                 #Assuuming that the array from the fitness function is passed in,
                 #each row of the array will only have one element thus the indexing at 0
             xx = random.random()
@@ -97,7 +96,7 @@ def PlotVectorAsLine(Array_Name):
     return plotted_results
 
 def testRun():
-    arr = MatrixCreate(10,1)
+    arr = MatrixCreate(1,10)
     print arr
     print "RANDOMIZED"
     MatrixRandomize(arr)
@@ -105,9 +104,10 @@ def testRun():
     jj = Fitness(arr)
     print "FITNESS"
     print jj
-    ii = MatrixPerturb(jj,0.99)
+    ii = MatrixPerturb(arr,0.5)
     print "MATRIXPERTURB"
     print ii
+    print arr == ii
     '''
     Parent_Array = MatrixCreate(10,1)
     Child = MatrixCreate(10,1)
