@@ -34,13 +34,13 @@ def Fitness(Array_Name):
     #len() gives the number of rows
     element_size = (size(Array_Name))/array_row
     #element_size determines the number of columns in each row
-    vector_means = MatrixCreate(array_row,1)
+    vector_means = MatrixCreate(1,element_size)
     #vector_means will hold the means of each row
     for row in range(array_row):
         for column in range(element_size):
             current_sum = sum(Array_Name[row,:])
             vector_mean = current_sum/element_size
-            vector_means[row,0] = vector_mean
+            vector_means[0,column] = vector_mean
     return vector_means
 
 def MatrixPerturb(Array_Name,Probability):
@@ -52,20 +52,18 @@ def MatrixPerturb(Array_Name,Probability):
     array_columns = (size(Array_Name))/array_rows
     #element_size determines the number of columns in each row
     
-    #prob_vector = MatrixCreate(array_rows,array_columns)
-    #allocating space for new vector
-    #prob_vector[:,:] = Array_Name[:,:]
     prob_vector = deepcopy(Array_Name)
     #copying all of the elements from the matrix passed in to a new matrix
-
+    
     random.seed()
     xx = random.random()
     for row in range(array_rows):
-        if(xx<Probability):
-            prob_vector[row,(range(array_columns))] = random.random()
-            #Assuuming that the array from the fitness function is passed in,
-            #each row of the array will only have one element thus the indexing at 0
-        xx = random.random()
+        for column in range(array_columns):
+            if(xx<Probability):
+                prob_vector[row,columns] = random.random()
+                #Assuuming that the array from the fitness function is passed in,
+                #each row of the array will only have one element thus the indexing at 0
+            xx = random.random()
         #print "RANDOM",row,xx
         #re-generate the random number
     return prob_vector
@@ -87,6 +85,7 @@ def SerialHillClimber(Rows,Columns,Generations):
                 if(Child_Fitness > Parent_Fitness):
                     Parent_Array[row,column] = Child_Array[row,column]
                     Parent_Fitness[row,0] = Child_Fitness[row,0]
+                    
             Fits[cur_gen] = Parent_Fitness
         
     return Fits
