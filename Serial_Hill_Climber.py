@@ -54,7 +54,6 @@ def MatrixPerturb(Array_Name,Probability):
     prob_vector = deepcopy(Array_Name)
     #copying all of the elements from the matrix passed in to a new matrix
     
-    random.seed()
     xx = random.random()
     for row in range(array_rows):
         for column in range(array_columns):
@@ -64,7 +63,6 @@ def MatrixPerturb(Array_Name,Probability):
                 #each row of the array will only have one element thus the indexing at 0
             xx = random.random()
         #print "RANDOM",row,xx
-        #re-generate the random number
     return prob_vector
 
 def SerialHillClimber(Rows,Columns,Generations):
@@ -76,27 +74,31 @@ def SerialHillClimber(Rows,Columns,Generations):
     Fits = MatrixCreate(Generations,1)
     #:::
     for cur_gen in range(Generations):
+        #print "PARENT FITNESS", Parent_Fitness[0][0]
         print cur_gen, Parent_Fitness[0][0]
         Child_Array = MatrixPerturb(Parent_Array,0.05)
         Child_Fitness = Fitness(Child_Array)
+        #print "CHILD FITNESS",Child_Fitness[0][0]
         for row in range(Rows):
             for column in range(Columns):
                 if(Child_Fitness > Parent_Fitness):
-                    Parent_Array[row,column] = Child_Array[row,column]
-                    Parent_Fitness[row,0] = Child_Fitness[row,0]
+                    #Parent_Array[row,column] = Child_Array[row,column]
+                    #Parent_Fitness[row,0] = Child_Fitness[row,0]
+                    Parent_Array = Child_Array
+                    Parent_Fitness = Child_Fitness
                     
-            Fits[cur_gen] = Parent_Fitness
+        Fits[cur_gen] = Parent_Fitness
         
     return Fits
     
         
 def PlotVectorAsLine(Array_Name):
     plotted_results = plt.plot(Array_Name)
-    #plt.show()
+    plt.show()
     return plotted_results
 
 def testRun():
-    arr = MatrixCreate(1,10)
+    arr = MatrixCreate(2,10)
     print arr
     print "RANDOMIZED"
     MatrixRandomize(arr)
@@ -108,6 +110,7 @@ def testRun():
     print "MATRIXPERTURB"
     print ii
     print arr == ii
+    
     '''
     Parent_Array = MatrixCreate(10,1)
     Child = MatrixCreate(10,1)
