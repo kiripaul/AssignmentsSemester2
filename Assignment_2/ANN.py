@@ -121,20 +121,41 @@ def Genes(Rows,Columns,Generations):
     jj = plt.imshow(genes, cmap=plt.get_cmap('gray'), aspect= 'auto',interpolation= 'nearest')
     plt.show(jj)
 ##################################################################################################
-def CreateNeuron(Rows,Columns):
+def CreateNeurons(Rows,Columns):
+    #Inputs: int,int
+    #Output: Rows-by-Columns array with random ints in first row
     neuron_values = MatrixCreate(Rows,Columns)
+
+    random.seed()
+    for column in range(Columns):
+        neuron_values[0,column] = random.random()
     return neuron_values
 
-def SetUpNeuron(neural_array):
-    array_rows = len(neural_array)
-    #len() gives the number of rows
-    array_columns = (size(neural_array))/array_rows
-    #element_size determines the number of columns in each row
-    random.seed()
-    for column in range(array_columns):
-        neural_array[0,column] = random.random()
+def NeuronPositions(num_neurons):
+    #Inputs: int
+    #Output: 2-by-num_neurons Array; describes the x & y positions of neurons
+    neuron_positions = MatrixCreate(2,num_neurons)
+    angle = 0
+    angle_update = (2*pi)/num_neurons
+    print "***ANGLE UPDATE 1***", angle_update
+    for i in range(num_neurons):
+        print "----------------i-------------", i
+        x = sin(angle)
+        print "X:",x
+        y = cos(angle)
+        print "Y:",y
+        angle = angle + angle_update
+        print "UPDATED ANGLE:", angle
+        neuron_positions[0,i] = x
+        neuron_positions[1,i] = y
+    return neuron_positions
 
-    return neural_array
+def PlotNeuronPos(num_neurons):
+    neural_array = NeuronPositions(num_neurons)
+    jj = plt.plot(neural_array[0],neural_array[1],'ko',markerfacecolor=[1,1,1],markersize=18)
+    #plt.ylim(-3,3)
+    #plt.xlim(-3,3)
+    plt.show(jj)
     
 '''
 def testRun():
