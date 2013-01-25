@@ -137,15 +137,10 @@ def NeuronPositions(num_neurons):
     neuron_positions = MatrixCreate(2,num_neurons)
     angle = 0
     angle_update = (2*pi)/num_neurons
-    print "***ANGLE UPDATE 1***", angle_update
     for i in range(num_neurons):
-        print "----------------i-------------", i
         x = sin(angle)
-        print "X:",x
         y = cos(angle)
-        print "Y:",y
         angle = angle + angle_update
-        print "UPDATED ANGLE:", angle
         neuron_positions[0,i] = x
         neuron_positions[1,i] = y
     return neuron_positions
@@ -153,24 +148,17 @@ def NeuronPositions(num_neurons):
 def PlotNeuronPos(num_neurons):
     neural_array = NeuronPositions(num_neurons)
     jj = plt.plot(neural_array[0],neural_array[1],'ko',markerfacecolor=[1,1,1],markersize=18)
-    #plt.ylim(-3,3)
-    #plt.xlim(-3,3)
     plt.show(jj)
+
+def CreateSynapses(Row, Columns):
+    syn = MatrixCreate(Rows,Columns)
+    return syn
+    
+    
     
 '''
 def testRun():
-    arr = MatrixCreate(2,10)
-    print arr
-    print "RANDOMIZED"
-    MatrixRandomize(arr)
-    print arr
-    jj = Fitness(arr)
-    print "FITNESS"
-    print jj
-    ii = MatrixPerturb(arr,0.5)
-    print "MATRIXPERTURB"
-    print ii
-    print arr == ii
+
 '''    
 
     
