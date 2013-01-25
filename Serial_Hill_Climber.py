@@ -122,7 +122,7 @@ def Genes(Rows,Columns,Generations):
                 
     jj = plt.imshow(genes, cmap=plt.get_cmap('gray'), aspect= 'auto',interpolation= 'nearest')
     plt.show(jj)
-
+'''
 def testRun():
     arr = MatrixCreate(2,10)
     print arr
@@ -136,20 +136,7 @@ def testRun():
     print "MATRIXPERTURB"
     print ii
     print arr == ii
-    
-    '''
-    Parent_Array = MatrixCreate(10,1)
-    Child = MatrixCreate(10,1)
-    MatrixRandomize(Parent_Array)
-    Parent_Fitness = Fitness(Parent_Array)
-    for current_gen in range(8):
-        print current_gen,Parent_Fitness[0][0]
-        Child = MatrixPerturb(Parent_Array,0.05)
-        Child_Fitness = Fitness(Child)
-        if(Child_Fitness > Parent_Fitness):
-            Parent_Array = Child
-            Parent_Fitness = Child_Fitness
-    '''
-    
+'''    
+
     
     
