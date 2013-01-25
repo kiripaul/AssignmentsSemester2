@@ -75,15 +75,13 @@ def SerialHillClimber(Rows,Columns,Generations):
     #:::
     for cur_gen in range(Generations):
         #print "PARENT FITNESS", Parent_Fitness[0][0]
-        print cur_gen, Parent_Fitness[0][0]
+        #print cur_gen, Parent_Fitness[0][0]
         Child_Array = MatrixPerturb(Parent_Array,0.05)
         Child_Fitness = Fitness(Child_Array)
         #print "CHILD FITNESS",Child_Fitness[0][0]
         for row in range(Rows):
             for column in range(Columns):
                 if(Child_Fitness > Parent_Fitness):
-                    #Parent_Array[row,column] = Child_Array[row,column]
-                    #Parent_Fitness[row,0] = Child_Fitness[row,0]
                     Parent_Array = Child_Array
                     Parent_Fitness = Child_Fitness
                     
@@ -91,7 +89,6 @@ def SerialHillClimber(Rows,Columns,Generations):
         
     return Fits
     
-        
 def PlotVectorAsLine(Array_Name):
     plotted_results = plt.plot(Array_Name)
     return plotted_results
@@ -102,10 +99,29 @@ def PlotHC(Rows,Columns,Generations,Lineages):
         ii = PlotVectorAsLine(graph_me)   
     plt.show(ii)
 
-
-
-
-
+def Genes(Rows,Columns,Generations):
+    genes = MatrixCreate(Columns,Generations)
+    #:::
+    Parent_Array = MatrixCreate(Rows,Columns)
+    #:::
+    Parent_Array = MatrixRandomize(Parent_Array)
+    #:::
+    Parent_Fitness = Fitness(Parent_Array)
+    #:::
+    Fits = MatrixCreate(Generations,1)
+    #:::
+    for cur_gen in range(Generations):
+        Child_Array = MatrixPerturb(Parent_Array,0.05)
+        Child_Fitness = Fitness(Child_Array)
+        for row in range(Rows):
+            for column in range(Columns):
+                if(Child_Fitness > Parent_Fitness):
+                    Parent_Array = Child_Array
+                    Parent_Fitness = Child_Fitness          
+                genes[column][cur_gen] = Parent_Array[row][column]
+                
+    jj = plt.imshow(genes, cmap=plt.get_cmap('gray'), aspect= 'auto',interpolation= 'nearest')
+    plt.show(jj)
 
 def testRun():
     arr = MatrixCreate(2,10)
