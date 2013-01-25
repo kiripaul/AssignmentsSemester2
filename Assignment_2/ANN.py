@@ -120,9 +120,22 @@ def Genes(Rows,Columns,Generations):
                 
     jj = plt.imshow(genes, cmap=plt.get_cmap('gray'), aspect= 'auto',interpolation= 'nearest')
     plt.show(jj)
+##################################################################################################
+def CreateNeuron(Rows,Columns):
+    neuron_values = MatrixCreate(Rows,Columns)
+    return neuron_values
 
-def CreateNeuron():
-    neuron_values = MatrixCreate(50,10)
+def SetUpNeuron(neural_array):
+    array_rows = len(neural_array)
+    #len() gives the number of rows
+    array_columns = (size(neural_array))/array_rows
+    #element_size determines the number of columns in each row
+    random.seed()
+    for column in range(array_columns):
+        neural_array[0,column] = random.random()
+
+    return neural_array
+    
 '''
 def testRun():
     arr = MatrixCreate(2,10)
