@@ -108,8 +108,6 @@ def Genes(Rows,Columns,Generations):
     #:::
     Parent_Fitness = Fitness(Parent_Array)
     #:::
-    Fits = MatrixCreate(Generations,1)
-    #:::
     for cur_gen in range(Generations):
         Child_Array = MatrixPerturb(Parent_Array,0.05)
         Child_Fitness = Fitness(Child_Array)
