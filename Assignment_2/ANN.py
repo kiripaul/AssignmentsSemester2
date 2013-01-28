@@ -146,13 +146,22 @@ def NeuronPositions(num_neurons):
     return neuron_positions
 
 def PlotNeuronPos(num_neurons):
+    # Plots Neuron Position
     neural_array = NeuronPositions(num_neurons)
     jj = plt.plot(neural_array[0],neural_array[1],'ko',markerfacecolor=[1,1,1],markersize=18)
     plt.show(jj)
 
 def CreateSynapses(Row, Columns):
-    syn = MatrixCreate(Rows,Columns)
+    #Inputs: int,int
+    #Output: Rows-by-Columns array with random ints from -1 to 1 for each element
+    syn = MatrixCreate(Row,Columns)
+    for i in range(Row):
+        for j in range(Columns):
+            syn[i,j] = random.uniform(-1,1)
+        
     return syn
+
+
     
     
     
