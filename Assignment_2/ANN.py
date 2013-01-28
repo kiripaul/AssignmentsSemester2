@@ -161,6 +161,20 @@ def CreateSynapses(Row, Columns):
         
     return syn
 
+def PlotNeuron_2(neuron_positions):
+    #Inputs: Array
+    #Outputs: Plots of neurons each connected: no weight to synapses
+
+    rows = len(neuron_positions)
+    #len() gives the number of rows
+    columns = (size(neuron_positions))/rows
+    #determines the number of columns in each row
+
+
+    
+    
+    
+
 
     
     
