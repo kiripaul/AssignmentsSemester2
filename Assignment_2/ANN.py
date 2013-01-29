@@ -120,7 +120,7 @@ def Genes(Rows,Columns,Generations):
                 
     jj = plt.imshow(genes, cmap=plt.get_cmap('gray'), aspect= 'auto',interpolation= 'nearest')
     plt.show(jj)
-##################################################################################################
+################# ASSIGNMENT 2 #########################
 def CreateNeurons(Rows,Columns):
     #Inputs: int,int
     #Output: Rows-by-Columns array with random ints in first row
@@ -149,7 +149,8 @@ def PlotNeuronPos(num_neurons):
     # Plots Neuron Position
     neural_array = NeuronPositions(num_neurons)
     jj = plt.plot(neural_array[0],neural_array[1],'ko',markerfacecolor=[1,1,1],markersize=18)
-    plt.show(jj)
+    #plt.show(jj)
+    return jj
 
 def CreateSynapses(Row, Columns):
     #Inputs: int,int
@@ -169,16 +170,19 @@ def PlotNeuron_2(neuron_positions):
     #len() gives the number of rows
     columns = (size(neuron_positions))/rows
     #determines the number of columns in each row
-
-
-    
-    
-    
-
-
-    
-    
-    
+    end = columns - 1
+    for i in range(columns):
+        for j in range(end):
+            x1 = neuron_positions[0][i]
+            x2 = neuron_positions[0][j]
+            
+            y1 = neuron_positions[1][i]
+            y2 = neuron_positions[1][j]
+            
+            result = plt.plot([x1,x2],[y1,y2])
+            #plt.plot((neuron_positions[0],neuron_positions[1]),([x1,x2],[y1,y2]),'ko',markerfacecolor = [1,1,1],markersize = 18)
+    plt.show(result)
+    #plt.show()
 '''
 def testRun():
 
