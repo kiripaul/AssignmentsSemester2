@@ -162,22 +162,24 @@ def CreateSynapses(Row, Columns):
         
     return syn
 
-def PlotNeuron_2(neuron_positions):
+def PlotNeuron_2(num_neurons):
     #Inputs: Array
     #Outputs: Plots of neurons each connected: no weight to synapses
 
-    rows = len(neuron_positions)
-    #len() gives the number of rows
-    columns = (size(neuron_positions))/rows
+    neuron_positions = NeuronPositions(num_neurons)
+    plt.plot(neuron_positions[0],neuron_positions[1],'ko',markerfacecolor=[1,1,1],markersize=18)
+    #Plots just the markers
+
+    columns = size(neuron_positions[0])
     #determines the number of columns in each row
     end = columns - 1
     for i in range(columns):
         for j in range(end):
             x1 = neuron_positions[0][i]
-            x2 = neuron_positions[0][j]
+            x2 = neuron_positions[0][j+1]
             
             y1 = neuron_positions[1][i]
-            y2 = neuron_positions[1][j]
+            y2 = neuron_positions[1][j+1]
             
             result = plt.plot([x1,x2],[y1,y2])
             #plt.plot((neuron_positions[0],neuron_positions[1]),([x1,x2],[y1,y2]),'ko',markerfacecolor = [1,1,1],markersize = 18)
