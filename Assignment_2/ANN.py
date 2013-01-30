@@ -163,7 +163,7 @@ def CreateSynapses(Row, Columns):
     return syn
 
 def PlotNeuron_2(num_neurons):
-    #Inputs: Array
+    #Inputs: int
     #Outputs: Plots of neurons each connected: no weight to synapses
 
     neuron_positions = NeuronPositions(num_neurons)
@@ -182,13 +182,98 @@ def PlotNeuron_2(num_neurons):
             y2 = neuron_positions[1][j+1]
             
             result = plt.plot([x1,x2],[y1,y2])
-            #plt.plot((neuron_positions[0],neuron_positions[1]),([x1,x2],[y1,y2]),'ko',markerfacecolor = [1,1,1],markersize = 18)
-    plt.show(result)
-    #plt.show()
-'''
-def testRun():
+            
+    #plt.show(result)
+    return result
 
-'''    
+def PlotNeuron_2_Synapse(num_neurons):
+    #Inputs: int
+    #Outputs: Plots of neurons each connected: no weight to synapses
 
+    neuron_positions = NeuronPositions(num_neurons)
+    plt.plot(neuron_positions[0],neuron_positions[1],'ko',markerfacecolor=[1,1,1],markersize=18)
+    #Plots just the markers
     
+    #rows = len(neuron_positions)
+    #determines the number of rows
+    columns = size(neuron_positions[0])
+    #determines the number of columns in each row
+    end = columns - 1
+
+    synapse = CreateSynapses(columns,columns)
+    
+    for i in range(columns):
+        for j in range(end):
+            x1 = neuron_positions[0][i]
+            x2 = neuron_positions[0][j+1]
+                
+            y1 = neuron_positions[1][i]
+            y2 = neuron_positions[1][j+1]
+            if(synapse[i][j] < 0):
+                result = plt.plot([x1,x2],[y1,y2],color=[.8,.8,.8])
+                #result = plt.plot([x1,x2],[y1,y2],color=[.8,.8,.8],linewidth=(10*abs(synapse[i][j]))+1)
+            else:
+                result = plt.plot([x1,x2],[y1,y2],color=[0,0,0])
+                #result = plt.plot([x1,x2],[y1,y2],color=[0,0,0],linewidth=(10*abs(synapse[i][j]))+1)
+
+    plt.show(result)
+
+def PlotNeuronWeight(num_neurons):
+    #Inputs: int
+    #Outputs: Plots of neurons each connected: no weight to synapses
+
+    neuron_positions = NeuronPositions(num_neurons)
+    plt.plot(neuron_positions[0],neuron_positions[1],'ko',markerfacecolor=[1,1,1],markersize=18)
+    #Plots just the markers
+    
+    columns = size(neuron_positions[0])
+    #determines the number of columns in each row
+    end = columns - 1
+
+    synapse = CreateSynapses(columns,columns)
+    
+    for i in range(columns):
+        for j in range(end):
+            x1 = neuron_positions[0][i]
+            x2 = neuron_positions[0][j+1]
+                
+            y1 = neuron_positions[1][i]
+            y2 = neuron_positions[1][j+1]
+            if(synapse[i][j] < 0):
+                w = int(10*abs(synapse[i][j]))+1
+                result = plt.plot([x1,x2],[y1,y2],color=[.8,.8,.8],linewidth=w)
+            else:
+                w = int(10*abs(synapse[i][j]))+1
+                result = plt.plot([x1,x2],[y1,y2],color=[0,0,0],linewidth=w)
+
+    plt.show(result)
+    
+def Update(neuronValues,synapses,i):
+    for j in range(0,10):
+        temp = 0
+        for k in range(0,10):
+            temp += synapses[j][k]*neuronValues[i-1][k]
+
+        if temp > 1:
+            temp = 1
+        elif temp < 0:
+            temp = 0
+        neuronValues[i][j] = temp
+    return neuronValues
+
+def PlotUpdate():
+    #Inputs: nothing
+    #Outputs: Plots the strength of each neuron 
+    neuronValues = CreateNeurons(50,10)
+    synapses = CreateSynapses(10,10)
+    for i in range(1,50):
+        neuronValues = Update(neuronValues,synapses,i)
+        
+    jj = plt.imshow(neuronValues, cmap=plt.get_cmap('gray'), aspect= 'auto',interpolation= 'nearest')
+    plt.show(jj)
+    
+
+
+
+            
     
