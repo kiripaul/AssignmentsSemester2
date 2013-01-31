@@ -273,6 +273,17 @@ def PlotUpdate():
     plt.show(jj)
 
 ################# ASSIGNMENT 3 #########################
+def VectorCreate(numNeurons):
+    matrix_list = zeros(numNeurons,dtype=float)
+    return matrix_list
+
+def MeanDistance(v1,v2):
+    dist = 0
+    for i in range(len(v1)):
+        dist += sum(pow(v1[i]-v2[i],2))
+    dist = sqrt(dist)
+    return dist
+
 def MatrixRandomize2(Array_Name):
     #Input: Array
     #Output: New Array
@@ -286,29 +297,72 @@ def MatrixRandomize2(Array_Name):
         for column in range(array_columns):
             #looping through each column(element) in the row
             Array_Name[row,column] = random.uniform(-1,1)
-    return Array_Name    
-    
-def Step1(Rows,Columns):
-    Parent_Array = MatrixCreate(Rows,Columns)
-    #:::
-    Parent_Array = MatrixRandomize2(Parent_Array)
-    #:::
-    print Parent_Array
-#    Parent_Fitness = Fitness(Parent_Array)
-#    Fits = MatrixCreate(Generations,1)
-    #:::
-#    for cur_gen in range(Generations):
-        #print "PARENT FITNESS", Parent_Fitness[0][0]
-        #print cur_gen, Parent_Fitness[0][0]
-#        Child_Array = MatrixPerturb(Parent_Array,0.05)
-#        Child_Fitness = Fitness(Child_Array)
-        #print "CHILD FITNESS",Child_Fitness[0][0]
-#        for row in range(Rows):
-#            for column in range(Columns):
-#                if(Child_Fitness > Parent_Fitness):
-#                    Parent_Array = Child_Array
-#                    Parent_Fitness = Child_Fitness
-                    
-#        Fits[cur_gen] = Parent_Fitness
+    return Array_Name
+
+def PlotUpdate2(parent):
+    #Inputs: nothing
+    #Outputs: Plots the strength of each neuron 
         
-#    return Fits
+    jj = plt.imshow(parent, cmap=plt.get_cmap('gray'), aspect= 'auto',interpolation= 'nearest')
+    plt.show(jj)
+
+
+def Update2(neuronValues,synapse,i):
+    for j in range(0,10):
+        temp = 0
+        for k in range(0,10):
+            temp += synapse[j][k]*neuronValues[i-1][k]
+
+        if temp > 1:
+            temp = 1
+        elif temp < 0:
+            temp = 0
+        neuronValues[i][j] = temp
+    return neuronValues
+
+
+def Fitness2(synapse):
+    neuronValues = numpy.zeros(shape=(10,10))
+    for n in range(10):
+        neuronValues[0][n] = 0.5
+
+    for i in range(1,10):
+        neuronValues = Update2(neuronValues,synapse,i)
+
+    #PlotUpdate2(neuronValues)
+
+    actualNeuronValues = synapse[9,:]
+    
+    desiredNeuronValues = VectorCreate(10)
+    for j in range(0,10,2):
+        desiredNeuronValues[j]=1
+        
+    d = MeanDistance(actualNeuronValues,desiredNeuronValues)
+    fit = 1 - d
+   
+    return fit
+    
+def Main(Rows,Columns):
+    parent_synapse = MatrixCreate(Rows,Columns)
+    #:::
+    parent_synapse = MatrixRandomize2(parent_synapse)
+    #:::
+    parent_synapse_fitness = Fitness2(parent_synapse)
+    
+    #:::
+    Fits = MatrixCreate(5000,1)
+
+    for cur_gen in range(5000):
+        child_synapse = MatrixPerturb(parent_synapse,0.05)
+        child_synapse_fitness = Fitness2(child_synapse)
+        print cur_gen, child_synapse_fitness
+        for row in range(10):
+            for column in range(10):
+                if(child_synapse_fitness > parent_synapse_fitness):
+                    parent_synapse = child_synapse
+                    parent_synapse_fitness = child_synapse_fitness
+                   
+        Fits[cur_gen] = parent_synapse_fitness
+        
+    return Fits
+
