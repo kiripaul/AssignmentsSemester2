@@ -1,100 +1,20 @@
 import numpy
 from scipy import *
+from numpy import *
+from pylab import *
 import matplotlib.pyplot as plt
 import random
 from copy import deepcopy
 
 ################# ASSIGNMENT 3 #########################
-def MatrixCreate(Rows,Columns):
-    #Inputs: int,int
-    #Output: Array of zeroes
-    
-    matrix_list = numpy.zeros(shape=(Rows,Columns))
-    return matrix_list
-
-def MatrixPerturb(Array_Name,Probability):
-    #Input: Array, Float
-    #Output: Array
-    
-    array_rows = len(Array_Name)
-    #len() gives the number of rows
-    array_columns = (size(Array_Name))/array_rows
-    #element_size determines the number of columns in each row
-    
-    prob_vector = deepcopy(Array_Name)
-    #copying all of the elements from the matrix passed in to a new matrix
-    
-    xx = random.random()
-    for row in range(array_rows):
-        for column in range(array_columns):
-            if(xx<Probability):
-                prob_vector[row,column] = random.uniform(-1,1)
-                #Assuuming that the array from the fitness function is passed in,
-                #each row of the array will only have one element thus the indexing at 0
-            xx = random.uniform(-1,1)
-        #print "RANDOM",row,xx
-    return prob_vector
-
-def MatrixRandomize(Array_Name):
-    #Input: Array
-    #Output: New Array
-    random.seed()
-    array_rows = len(Array_Name)
-    #len() gives the number of rows
-    array_columns = (size(Array_Name[0]))
-    #element_size determines the number of columns in each row
-    for row in range(array_rows):
-        #looping through Rows
-        for column in range(array_columns):
-            #looping through each column(element) in the row
-            Array_Name[row,column] = random.uniform(-1,1)
-    return Array_Name
-
-def VectorCreate(numNeurons):
-    matrix_list = zeros(numNeurons,dtype=float)
-    return matrix_list
-
-def MeanDistance(v1,v2):
-    dist = 0
-    for i in range(len(v1)):
-        dist += sum(pow(v1[i]-v2[i],2))
-    dist = sqrt(dist)/sqrt(10)
-    
-    return dist
-
-def PlotUpdate(parent):
-    #Inputs: nothing
-    #Outputs: Plots the strength of each neuron 
-        
-    jj = plt.imshow(parent, cmap=plt.get_cmap('gray'), aspect= 'auto',interpolation= 'nearest')
-    plt.show(jj)
-
-
-def Update(neuronValues,parent,i):
-    for j in range(0,10):
-        temp = 0
-        for k in range(0,10):
-            temp += parent[j][k]*neuronValues[i-1][k]
-
-        if temp > 1:
-            temp = 1
-        elif temp < 0:
-            temp = 0
-        neuronValues[i][j] = temp
-
-    return neuronValues
-
-
 def Fitness(parent):
     neuronValues = numpy.zeros(shape=(10,10))
+    neuronValues = neuronValues[0]
     for n in range(10):
-        neuronValues[0][n] = 0.5
+        neuronValues[n] = 0.5
 
     for i in range(1,10):
         neuronValues = Update(neuronValues,parent,i)
-
-    #print neuronValues
-    #PlotUpdate(neuronValues)
 
     actualNeuronValues = neuronValues[9,:]
     
@@ -106,6 +26,89 @@ def Fitness(parent):
     fit = 1 - d
    
     return fit,neuronValues
+
+def MatrixCreate(Rows,Columns):
+    
+    matrix_list = np.zeros((Rows,Columns))
+    return matrix_list
+
+def MatrixPerturb(Array_Name,Probability):
+    
+    array_rows = len(Array_Name)
+    array_columns = (len(Array_Name[0]))
+    
+    prob_vector = deepcopy(Array_Name)
+    
+    for row in range(array_rows):
+        for column in range(array_columns):
+            if(random.random()<Probability):
+                prob_vector[row,column] = random.uniform(-1,1)
+    return prob_vector
+
+def MatrixRandomize(Array_Name):
+    random.seed()
+    array_rows = len(Array_Name)
+    array_columns = (size(Array_Name[0]))
+    for row in range(array_rows):
+        for column in range(array_columns):
+            Array_Name[row,column] = random.uniform(-1,1)
+    return Array_Name
+
+def VectorCreate(numNeurons):
+    matrix_list = zeros((numNeurons),dtype='f')
+    return matrix_list
+
+def MeanDistance(v1,v2):
+    dist = 0
+    for i in range(len(v1)):
+        dist += sum(pow(v1[i]-v2[i],2))
+    dist = sqrt(dist)/sqrt(10)
+    
+    return dist
+
+def PlotUpdate(parent):
+    plt.imshow(parent, cmap=cm.gray, aspect= 'auto',interpolation= 'nearest')
+    plt.show()
+    
+def PlotVectorAsLine(parent):
+    parent = parent[0]
+    plt.plot(parent)
+    #plt.ylim(0,1.1)
+    plt.show()
+
+def Update(temper,synapses,i):
+    numcol = len(temper[0])
+    for j in range(numcol):
+        temp = 0
+        for k in range(0,9):
+            temp += temper[i-1,k]*synapses[j,k]
+
+        if(temp > 1):
+            temp = 1
+        elif(temp < 0):
+            temp = 0
+        temper[i][j] = temp
+    return temper
+
+
+def Fitness2(synapses):
+    temper = np.zeros((10,10))
+    for n in range(10):
+        temper[0,n] = 0.5
+        
+    for i in range(1,10):
+        neuronValues = Update(temper,synapses,i)
+
+    diff=0.0
+    for i in range(0,9):
+        for j in range(0,9):
+            diff= diff + abs(neuronValues[i,j]-neuronValues[i,j+1])
+            diff= diff + abs(neuronValues[i+1,j]-neuronValues[i,j])
+
+    diff=diff/(2*9*9)
+
+    return diff,neuronValues
+
     
 def Main(Rows,Columns):
     parent = MatrixCreate(Rows,Columns)
@@ -113,21 +116,33 @@ def Main(Rows,Columns):
     parent = MatrixRandomize(parent)
     #:::
     
-    parent_fitness,neuronValues = Fitness(parent)
+    parent_fitness,neuronValues = Fitness2(parent)
+
+    #PlotUpdate(neuronValues)
    
-    Fits = MatrixCreate(1,5000)
+    Fits = MatrixCreate(1,1000)
+    Fits = Fits[0,:]
     #:::
-    for cur_gen in range(5000):
+    for cur_gen in range(1000):
         #print cur_gen, parent_fitness
+        Fits[cur_gen] = parent_fitness
         child = MatrixPerturb(parent,0.05)
-        child_fitness,neuronValues = Fitness(child)
-        for row in range(Rows):
-            for column in range(Columns):
-                if(child_fitness > parent_fitness):
-                    parent = child
-                    parent_fitness = child_fitness
-                    
-        Fits[0][cur_gen] = parent_fitness
+        child_fitness,neuronValues = Fitness2(child)
+        if(child_fitness > parent_fitness):
+            parent = deepcopy(child)
+            parent_fitness = child_fitness
+
+        Fits[cur_gen] = parent_fitness
+        
+
     PlotUpdate(neuronValues)
-    #return Fits
+    plt.plot(Fits)
+    plt.show()
+
+def SupaMain(runs):
+    for i in range(runs):
+        Main(10,10)
+        print i
+
+    print "finished"
 
