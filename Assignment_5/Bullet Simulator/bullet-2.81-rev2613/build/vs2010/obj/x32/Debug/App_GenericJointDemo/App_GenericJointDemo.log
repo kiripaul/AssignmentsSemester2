@@ -1,0 +1,46 @@
+﻿Build started 2/1/2013 4:56:07 PM.
+     1>Project "C:\Users\PK\Documents\My Files\2012-2013\Semester 2\Evolutionary Robotics\Bullet Simulator\bullet-2.81-rev2613\build\vs2010\App_GenericJointDemo.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating "obj\x32\Debug\App_GenericJointDemo\App_GenericJointDemo.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\..\src /I..\..\Demos\OpenGL /I..\..\Glut /Zi /nologo /W3 /WX- /Od /Oy- /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _HAS_EXCEPTIONS=0 /D GLEW_STATIC /D _MBCS /Gm- /RTC1 /MTd /GS /Gy /fp:fast /Zc:wchar_t /Zc:forScope /GR- /Fo"obj\x32\Debug\App_GenericJointDemo\\" /Fd"..\..\App_GenericJointDemo_vs2010_debug.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\Demos\GenericJointDemo\GenericJointDemo.cpp ..\..\Demos\GenericJointDemo\main.cpp ..\..\Demos\GenericJointDemo\Ragdoll.cpp ..\..\Demos\GenericJointDemo\Win32GenericJointDemo.cpp /MP 
+         GenericJointDemo.cpp
+         main.cpp
+         Ragdoll.cpp
+         Win32GenericJointDemo.cpp
+         Note: including lib: glut32.lib
+         
+         Note: including lib: glut32.lib
+         
+         Note: including lib: glut32.lib
+         
+       ResourceCompile:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _HAS_EXCEPTIONS=0 /D GLEW_STATIC /l"0x0409" /I..\..\src /I..\..\Demos\OpenGL /I..\..\Glut /nologo /fo"obj\x32\Debug\App_GenericJointDemo\bullet.res" ..\bullet.rc 
+       ManifestResourceCompile:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /nologo /fo"obj\x32\Debug\App_GenericJointDemo\App_GenericJointDemo_vs2010_debug.exe.embed.manifest.res" obj\x32\Debug\App_GenericJointDemo\App_GenericJointDemo_vs2010_debug_manifest.rc 
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"..\..\App_GenericJointDemo_vs2010_debug.exe" /INCREMENTAL /NOLOGO /LIBPATH:..\..\Glut opengl32.lib glew32s.lib glut32.lib ..\..\lib\OpenGLSupport_vs2010_debug.lib ..\..\lib\BulletDynamics_vs2010_debug.lib ..\..\lib\BulletCollision_vs2010_debug.lib ..\..\lib\LinearMath_vs2010_debug.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"obj\x32\Debug\App_GenericJointDemo\App_GenericJointDemo_vs2010_debug.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\PK\Documents\My Files\2012-2013\Semester 2\Evolutionary Robotics\Bullet Simulator\bullet-2.81-rev2613\App_GenericJointDemo_vs2010_debug.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /ENTRY:"mainCRTStartup" /DYNAMICBASE /NXCOMPAT /IMPLIB:"..\..\App_GenericJointDemo_vs2010_debug.lib" /MACHINE:X86 obj\x32\Debug\App_GenericJointDemo\bullet.res
+         obj\x32\Debug\App_GenericJointDemo\App_GenericJointDemo_vs2010_debug.exe.embed.manifest.res
+         obj\x32\Debug\App_GenericJointDemo\GenericJointDemo.obj
+         obj\x32\Debug\App_GenericJointDemo\main.obj
+         obj\x32\Debug\App_GenericJointDemo\Ragdoll.obj
+         obj\x32\Debug\App_GenericJointDemo\Win32GenericJointDemo.obj
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"obj\x32\Debug\App_GenericJointDemo\App_GenericJointDemo_vs2010_debug.exe.embed.manifest" /manifest obj\x32\Debug\App_GenericJointDemo\App_GenericJointDemo_vs2010_debug.exe.intermediate.manifest
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /nologo /fo"obj\x32\Debug\App_GenericJointDemo\App_GenericJointDemo_vs2010_debug.exe.embed.manifest.res" obj\x32\Debug\App_GenericJointDemo\App_GenericJointDemo_vs2010_debug_manifest.rc 
+       LinkEmbedManifest:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"..\..\App_GenericJointDemo_vs2010_debug.exe" /INCREMENTAL /NOLOGO /LIBPATH:..\..\Glut opengl32.lib glew32s.lib glut32.lib ..\..\lib\OpenGLSupport_vs2010_debug.lib ..\..\lib\BulletDynamics_vs2010_debug.lib ..\..\lib\BulletCollision_vs2010_debug.lib ..\..\lib\LinearMath_vs2010_debug.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"obj\x32\Debug\App_GenericJointDemo\App_GenericJointDemo_vs2010_debug.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\PK\Documents\My Files\2012-2013\Semester 2\Evolutionary Robotics\Bullet Simulator\bullet-2.81-rev2613\App_GenericJointDemo_vs2010_debug.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /ENTRY:"mainCRTStartup" /DYNAMICBASE /NXCOMPAT /IMPLIB:"..\..\App_GenericJointDemo_vs2010_debug.lib" /MACHINE:X86 obj\x32\Debug\App_GenericJointDemo\bullet.res
+         obj\x32\Debug\App_GenericJointDemo\App_GenericJointDemo_vs2010_debug.exe.embed.manifest.res
+         obj\x32\Debug\App_GenericJointDemo\GenericJointDemo.obj
+         obj\x32\Debug\App_GenericJointDemo\main.obj
+         obj\x32\Debug\App_GenericJointDemo\Ragdoll.obj
+         obj\x32\Debug\App_GenericJointDemo\Win32GenericJointDemo.obj
+         App_GenericJointDemo.vcxproj -> C:\Users\PK\Documents\My Files\2012-2013\Semester 2\Evolutionary Robotics\Bullet Simulator\bullet-2.81-rev2613\build\vs2010\..\..\App_GenericJointDemo_vs2010_debug.exe
+       FinalizeBuildStatus:
+         Deleting file "obj\x32\Debug\App_GenericJointDemo\App_GenericJointDemo.unsuccessfulbuild".
+         Touching "obj\x32\Debug\App_GenericJointDemo\App_GenericJointDemo.lastbuildstate".
+     1>Done Building Project "C:\Users\PK\Documents\My Files\2012-2013\Semester 2\Evolutionary Robotics\Bullet Simulator\bullet-2.81-rev2613\build\vs2010\App_GenericJointDemo.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:02.69
